@@ -8,6 +8,7 @@ module.exports = function (cb) {
       , onlineLed  = new five.Led(13)
       , servoX     = new five.Servo(10)
       , servoY     = new five.Servo(9)
+      , servoX2     = new five.Servo(11)
       ;
 
     //
@@ -18,6 +19,7 @@ module.exports = function (cb) {
 
     board.repl.inject({
       servoX:servoX,
+      servoX2:servoX2,
       servoY:servoY,
       laser:laser,
       onlineLed: onlineLed
@@ -27,6 +29,7 @@ module.exports = function (cb) {
     // center the servos
     //
     servoX.center();
+    servoX2.center();
     servoY.center();
 
     console.log('we have started our CDD (cat distraction device)');
@@ -36,11 +39,13 @@ module.exports = function (cb) {
       , x      : servoX
       , y      : servoY
       , online : onlineLed
-      , laser  : laser
+      , laser  : laser,
+      , x2     : servoX2
       });
 
   });
 }
+
 
 //           \`*-.                    
 //            )  _`-.                 
