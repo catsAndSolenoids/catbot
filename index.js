@@ -8,10 +8,13 @@ var five = require('johnny-five'),
     .parseSystem();
 
 
-module.exports = function (cb) {
+module.exports = function (board,cb) {
 
-  console.log(opt.options)
-  var board;
+
+  if (!cb) {
+    cb = board;
+    board = new five.Board();
+  }
     // if the port is specified assign it
       board    = new five.Board({
         port: opt.options.port
@@ -20,16 +23,16 @@ module.exports = function (cb) {
   board.on('ready', function() {
     var laser      = new five.Led(12)
       , onlineLed  = new five.Led(13)
-      , servoX     = new five.Servo(10)
-      , servoY     = new five.Servo(9)
-      ,reset
+      , x     = new five.Servo(10)
+      , y     = new five.Servo(9)
+      ,rst
       ;
-      reset= function() {
-        servoX.stop();
-        servoY.stop();
-        servoX.center();
-        servoY.center();
-      };
+    rst= function() {
+      x.stop();
+      y.stop();
+      x.center();
+      y.center();
+    };
     //
     // blinking a laser is a really bad idea
     // or maybe its awesome...
@@ -37,32 +40,32 @@ module.exports = function (cb) {
     laser.blink = { state:false };
 
     board.repl.inject({
-      servoX:servoX,
-      servoY:servoY,
+      x:x,
+      y:y,
       laser:laser,
       onlineLed: onlineLed,
-      reset:reset
+      rst:rst
     });
 
     //
     // center the servos
     //
-    servoX.center();
-    servoY.center();
+    x.center();
+    y.center();
 
     console.log('we have started our CDD (cat distraction device)');
 
     return cb(null,
       { board  : board
-      , x      : servoX
-      , y      : servoY
+      , x      : x
+      , y      : y
       , online : onlineLed
       , laser  : laser
-      , rst    : reset
+      , rst    : rst
       });
 
   });
-}
+};
 
 //           \`*-.
 //            )  _`-.
