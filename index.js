@@ -17,12 +17,12 @@ module.exports = function (opts,cb) {
   if(opts){
     console.log('options by require :')
     console.log(opts);
-    catOptions.port = opts.port || '/dev/cu.usbmodem1411' ;
+    catOptions.port = opts.port;
   }
   else if (opt){
     console.log('options by cli ARG :')
-    catOptions.port = opt.options.port;
     console.log(opt.options);
+    catOptions.port = opt.options.port;
   }
   else  {
     console.log('par defaut :')
