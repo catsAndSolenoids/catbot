@@ -22,8 +22,7 @@ catbot(function (error, hardware) {
 
 you can also specify the port from the command line as follow
 
-```node cat.js -P /dev/cu.usbmodem1421
-```
+```node cat.js -P /dev/cu.usbmodem1421```
 
 
 get docs at http://catremote.herokuapp.com/help
