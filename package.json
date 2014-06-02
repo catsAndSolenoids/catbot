@@ -18,6 +18,7 @@
   "author": "Jérôme Loï",
   "license": "BSD",
   "dependencies": {
-    "johnny-five": "~0.7.0"
+    "johnny-five": "~0.7.0",
+    "node-getopt": "^0.2.3"
   }
 }
