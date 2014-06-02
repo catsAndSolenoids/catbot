@@ -6,7 +6,16 @@ to use the cat bot you need to require it ...
 var catbot = require('catbot');
 
 catbot(function (error, hardware) {
-	// use your robot
+	/*
+	Called when Board ready. Use your robot:
+	hardware = {
+	    board  : Board
+	  , x      : Servo
+	  , y      : Servo
+	  , online : Led
+	  , laser  : Led
+	}
+	*/
 })
 ```
 
