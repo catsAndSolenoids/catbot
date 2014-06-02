@@ -1,23 +1,37 @@
-var five = require('johnny-five'),
-    opt = require('node-getopt').create([
+var five = require('johnny-five')
+    , opt = require('node-getopt').create([
       ['P' , 'port=ARG'   , 'set the port of the kitty if needed'],
       ['h' , 'help'                , 'display this help'],
       ['v' , 'version'             , 'show version']
     ])              // create Getopt instance for the kitty
     .bindHelp()     // bind option 'help' to default action
-    .parseSystem();
+    .parseSystem()
+    , catOptions ={}
+    ;
 
 
-module.exports = function (board,cb) {
+
+module.exports = function (opts,cb) {
 
 
-  if (!cb) {
-    cb = board;
-    board = new five.Board();
+  if(opts){
+    console.log('options by require :')
+    console.log(opts);
+    catOptions.port = opts.port || '/dev/cu.usbmodem1411' ;
   }
+  else if (opt){
+    console.log('options by cli ARG :')
+    catOptions.port = opt.options.port;
+    console.log(opt.options);
+  }
+  else  {
+    console.log('par defaut :')
+    catOptions.port = '/dev/cu.usbmodem1411';
+  }
+
     // if the port is specified assign it
-      board    = new five.Board({
-        port: opt.options.port
+    var  board    = new five.Board({
+        port: catOptions.port
   });
 
   board.on('ready', function() {
