@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
-    <title>Catbot</title>
+    <title>Catbot by gorhgorh</title>
   </head>
 
   <body>
@@ -31,6 +31,9 @@
         <h1>
 <a name="catbot" class="anchor" href="#catbot"><span class="octicon octicon-link"></span></a>CATBOT</h1>
 
+<h2>
+<a name="tldr" class="anchor" href="#tldr"><span class="octicon octicon-link"></span></a>TL;DR</h2>
+
 <p>to use the cat bot you need to require it ... </p>
 
 <div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">catbot</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'catbot'</span><span class="p">);</span>
@@ -44,20 +47,60 @@
 <span class="cm">      , y      : Servo</span>
 <span class="cm">      , online : Led</span>
 <span class="cm">      , laser  : Led</span>
-<span class="cm">      , rst    : Reset</span>
+<span class="cm">      , rst    : Function</span>
 <span class="cm">    }</span>
 <span class="cm">    */</span>
 <span class="p">})</span>
 </pre></div>
 
-<p>you can also specify the port from the command line as follow</p>
+<h2>
+<a name="use-it" class="anchor" href="#use-it"><span class="octicon octicon-link"></span></a>Use it</h2>
 
-<p><pre><code>node cat.js -P /dev/cu.usbmodem1421</code><pre></p>
+<h3>
+<a name="instantiate-the-bot" class="anchor" href="#instantiate-the-bot"><span class="octicon octicon-link"></span></a>instantiate the bot</h3>
 
-<p>get docs at <a href="http://catremote.herokuapp.com/help">http://catremote.herokuapp.com/help</a></p>
+<p>see the code above.</p>
+
+<h3>
+<a name="setup-the-port" class="anchor" href="#setup-the-port"><span class="octicon octicon-link"></span></a>setup the port</h3>
+
+<p>from time to time J5 tries to convert my bluetooth port to an arduino, so i need to specify the port the arduino is hooked up to. 
+you can spécify the desired port from the command line as an argument with the flag -P.</p>
+
+<p><code>node cat.js -P /dev/cu.usbmodem1421</code></p>
+
+<h3>
+<a name="inside-the-bot-" class="anchor" href="#inside-the-bot-"><span class="octicon octicon-link"></span></a>inside the bot :</h3>
+
+<p>move the X axis servo to 30° <code>hardware.x.to(30)</code> same goes for Y</p>
+
+<p>switch the laser on  <code>hardware.laser.on()</code> same goes for online led </p>
+
+<h2>
+<a name="build-it" class="anchor" href="#build-it"><span class="octicon octicon-link"></span></a>Build it</h2>
+
+<p>for the moment the cat is hardwired, so to have a properly responding cat remote control device wire as follow :</p>
+
+<ul>
+<li>servoX        : pin 10</li>
+<li>servoY        : pin 9</li>
+<li>online led    : pin 13</li>
+<li>laser         : pin 12</li>
+</ul><p>here is a diagram of the cat wiring</p>
+
+<p><img src="http://gorhgorh.github.io/LxJsCatbot/images/03.laser.png" alt="catbot wiring"></p>
+
+<p>the led with the transistor is the laser, my Fritzing did not have a laser module</p>
+
+<h2>
+<a name="bom" class="anchor" href="#bom"><span class="octicon octicon-link"></span></a>BOM</h2>
+
+<p>see the unfinished docs in the link bellow</p>
+
+<p>get the (still at work) docs <a href="http://gorhgorh.github.io/LxJsCatbot/">here</a></p>
       </section>
     </div>
 
-
+    
   </body>
 </html>
