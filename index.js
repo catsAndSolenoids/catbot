@@ -7,10 +7,8 @@ var five = require('johnny-five'),
     .bindHelp()     // bind option 'help' to default action
     .parseSystem();
 
-
 module.exports = function (cb) {
 
-  console.log(opt.options)
   var board;
     // if the port is specified assign it
       board    = new five.Board({
