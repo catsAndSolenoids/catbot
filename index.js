@@ -27,6 +27,7 @@ module.exports = function (cb) {
         servoY.stop();
         servoX.center();
         servoY.center();
+        laser.off();
       };
     //
     // blinking a laser is a really bad idea
