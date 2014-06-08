@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>Catbot by gorhgorh</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Catbot</h1>
+        <h2>Arduino + Johnny five = cat remote control </h2>
+
+        <section id="downloads">
+          <a href="https://github.com/gorhgorh/catbot/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/gorhgorh/catbot/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/gorhgorh/catbot" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>
+<a name="catbot" class="anchor" href="#catbot"><span class="octicon octicon-link"></span></a>CATBOT</h1>
+
+<p>to use the cat bot you need to require it ... </p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">catbot</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'catbot'</span><span class="p">);</span>
+
+<span class="nx">catbot</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">hardware</span><span class="p">)</span> <span class="p">{</span>
+    <span class="cm">/*</span>
+<span class="cm">    Called when Board ready. Use your robot:</span>
+<span class="cm">    hardware = {</span>
+<span class="cm">        board  : Board</span>
+<span class="cm">      , x      : Servo</span>
+<span class="cm">      , y      : Servo</span>
+<span class="cm">      , online : Led</span>
+<span class="cm">      , laser  : Led</span>
+<span class="cm">    }</span>
+<span class="cm">    */</span>
+<span class="p">})</span>
+</pre></div>
+
+<p>you can also specify the port from the command line as follow</p>
+
+<p><code>node cat.js -P /dev/cu.usbmodem1421</code></p>
+
+<p>get docs at <a href="http://catremote.herokuapp.com/help">http://catremote.herokuapp.com/help</a></p>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
