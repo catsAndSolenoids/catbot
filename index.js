@@ -20,9 +20,9 @@ module.exports = function (cb) {
       , onlineLed  = new five.Led(13)
       , servoX     = new five.Servo(10)
       , servoY     = new five.Servo(9)
-      ,reset
+      , rst
       ;
-      reset= function() {
+      rst= function() {
         servoX.stop();
         servoY.stop();
         servoX.center();
@@ -39,7 +39,7 @@ module.exports = function (cb) {
       servoY:servoY,
       laser:laser,
       onlineLed: onlineLed,
-      reset:reset
+      rst:rst
     });
 
     //
@@ -56,7 +56,7 @@ module.exports = function (cb) {
       , y      : servoY
       , online : onlineLed
       , laser  : laser
-      , rst    : reset
+      , rst    : rst
       });
 
   });
