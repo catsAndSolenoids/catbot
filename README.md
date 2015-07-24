@@ -33,7 +33,7 @@ you can spécify the desired port from the command line as an argument with the 
 
  ```node cat.js -P /dev/cu.usbmodem1421```
 
-###inside the bot :
+### inside the bot :
 move the X axis servo to 30° ```hardware.x.to(30)``` same goes for Y
 
 switch the laser on  ```hardware.laser.on()``` same goes for online led 

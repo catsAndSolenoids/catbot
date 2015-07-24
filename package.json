@@ -1,6 +1,6 @@
 {
   "name": "catbot",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "arduino remote cat controller",
   "main": "index.js",
   "scripts": {
@@ -18,7 +18,7 @@
   "author": "Jérôme Loï",
   "license": "BSD",
   "dependencies": {
-    "johnny-five": "~0.7.0",
+    "johnny-five": "^0.8.85",
     "node-getopt": "^0.2.3"
   }
 }

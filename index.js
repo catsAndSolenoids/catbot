@@ -1,11 +1,22 @@
 var five = require('johnny-five'),
     opt = require('node-getopt').create([
       ['P' , 'port=ARG'   , 'set the port of the kitty if needed'],
+      ['S' , 'servo=ARG'   , 'set the servo pin for the kitty (array)'],
       ['h' , 'help'                , 'display this help'],
       ['v' , 'version'             , 'show version']
     ])              // create Getopt instance for the kitty
     .bindHelp()     // bind option 'help' to default action
     .parseSystem();
+
+
+
+
+
+
+
+
+
+
 
 module.exports = function (cb) {
 
@@ -18,17 +29,27 @@ module.exports = function (cb) {
   board.on('ready', function() {
     var laser      = new five.Led(12)
       , onlineLed  = new five.Led(13)
-      , servoX     = new five.Servo(10)
-      , servoY     = new five.Servo(9)
+      , servoX
+      , servoY
       , rst
       ;
-      rst= function() {
-        servoX.stop();
-        servoY.stop();
-        servoX.center();
-        servoY.center();
-        laser.off();
-      };
+
+    if (opt.options.servo){
+      var servoPins = eval(opt.options.servo)
+      servoX     = new five.Servo(servoPins[0]);
+      servoY     = new five.Servo(servoPins[1]);
+    } else {
+      servoX     = new five.Servo(9);
+      servoY     = new five.Servo(10);
+    }
+
+    rst= function() {
+      servoX.stop();
+      servoY.stop();
+      servoX.center();
+      servoY.center();
+      laser.off();
+    };
     //
     // blinking a laser is a really bad idea
     // or maybe its awesome...
