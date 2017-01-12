@@ -18,8 +18,10 @@
   "author": "Jérôme Loï",
   "license": "BSD",
   "dependencies": {
+    "chalk": "^1.1.3",
     "debug": "^2.6.0",
     "johnny-five": "^0.10.6",
+    "lodash": "^4.17.4",
     "node-getopt": "^0.2.3",
     "rc": "^1.1.6"
   },

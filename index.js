@@ -1,41 +1,136 @@
-const conf = require('./lib/config')()
-const debug = require('debug')('catbot:main')
-const makeCat = require('./lib/catBoard')
+const five = require('johnny-five')
 
-// console.log(`
-// //           \`*-.
-// //            )  _\`-.
-// //           .  : \`. .
-// //           : _   '  \
-// //           ; *\` _.   \`*-._
-// //           \`-.-'          \`-.
-// //             ;       \`       \`.
-// //             :.       .        \
-// //             . \  .   :   .-'   .
-// //             '  \`+.;  ;  '      :
-// //             :  '  |    ;       ;-.
-// //             ; '   : :\`-:     _.\`*
-// //          .*' /  .*' ; .*\`- +'  \`*'
-// // .        \`*-*   \`*-*  \`*-*'\`)
-// `)
+const chalk = require('chalk')
+const green = chalk.green
+const red = chalk.red
+const blue = chalk.cyan
 
-const opt = {
-  hwJoystick: true,
-  catConf: conf
+const debug = require('debug')('catbot:board')
+const utils = require('./lib/utils')
+const applyDeadzone = utils.applyDeadzone
+const rng = utils.convertRange
+const getConf = require('./lib/config')
+
+
+
+function makeCat (catCb, opts) {
+  console.log(green(msg))
+  if (!opts.boardOpt) opts.boardOpt = {repl: false}
+  if (!opts.catConf) opts.catConf = getConf()
+  if (!opts.inputRange) {
+    debug('inputRange missing')
+    if (opts.catConf.inputRange) {
+      opts.inputRange = [opts.catConf.inputRange[0], opts.catConf.inputRange[1]]
+    } else {
+      opts.inputRange = [0, 180]
+    }
+  }
+  if (!opts.servoRange) {
+    debug('servorange missing')
+    if (opts.catConf.servoRange) {
+      opts.servoRange = [opts.catConf.servoRange[0], opts.catConf.servoRange[1]]
+    } else {
+      opts.servoRange = [0, 180]
+    }
+  }
+  debug('input', opts.inputRange, 'servo', opts.servoRange)
+  // debug('opts')
+  // debug(opts.catConf.hw)
+
+  const hw = opts.catConf.hw
+  const cat = {hw: {}}
+
+  cat.board = new five.Board(opts.boardOpt)
+  cat.board.on('ready', function () {
+    debug('board is ready')
+    console.log(blue('catbot is ready to use'))
+    const laser = new five.Led(hw.laser.pin)
+    const servoX = new five.Servo({pin: hw.servoX.pin, startAt: 10, range: opts.servoRange})
+    const servoY = new five.Servo({pin: hw.servoY.pin, startAt: 10, range: opts.servoRange})
+
+    if (opts.hwJoystick) {
+      let joyTimer
+      let isJoyOn = false
+      debug('init hwJoystick')
+      console.log(green('Joystick configured'))
+      console.log(blue('Press the joystick button for 2 sec to enable/disable it, quick press to toggle laser'))
+      const hwJoy = new five.Joystick({
+        pins: [hw.jstk.x, hw.jstk.y]
+      })
+
+      const button = new five.Button({
+        pin: 9,
+        isPullup: hw.jstk.isPullup
+      })
+
+      hwJoy.on('change', function () {
+        if (isJoyOn === true) {
+          const X = applyDeadzone(this.x, hw.jstk.deadZone)
+          const Y = applyDeadzone(this.y, hw.jstk.deadZone)
+
+          if (X !== 0 || Y !== 0) {
+            servoX.to(rng(this.x, opts.inputRange, opts.servoRange))
+            servoY.to(rng(this.y, opts.inputRange, opts.servoRange))
+          } else {
+            servoX.to(rng(0, [1, -1], [10, 170]))
+            servoY.to(rng(0, [1, -1], [10, 170]))
+          }
+        }
+      })
+
+      button.on('up', function () {
+        clearTimeout(joyTimer)
+        laser.toggle()
+      })
+      button.on('down', function () {
+        console.log(blue('hold 2 sec to toggle joymode'))
+        joyTimer = setTimeout(function () {
+          isJoyOn = !isJoyOn
+          console.log(blue('joyMode:'), isJoyOn)
+        }, 2000)
+      })
+        
+      cat.hw.hwJoy = hwJoy
+    }
+
+    /**
+     * orient the turret to the passed positions
+     *
+     * @param {Array} pos array of 2 value pos X and Y {numbers}
+     * @param {Array} [servos] optional array of j5 servos obj
+     */
+    cat.to = function (pos, servos) {
+      debug('cat.to called')
+      if (!servos) servos = [servoX, servoY]
+      servos[0].to(rng(pos[0], opts.inputRange, opts.servoRange))
+      servos[1].to(rng(pos[1], opts.inputRange, opts.servoRange))
+    }
+
+    cat.laser = laser
+    cat.servoX = servoX
+    cat.servoY = servoY
+    return catCb(null, cat)
+    // debug(cat)
+  })
+  // hw.laser = new five.Led(12)
 }
 
-debug(conf)
-const kitty = makeCat(opt)
-const khw = kitty.hw
 
-kitty.board.on('ready', function () {
-  debug('board is ready')
-  kitty.laser.on()
-  kitty.to([90, 90])
-})
+const msg = `
+            \`*-.
+             )  _\`-.
+            .  : \`. .
+            : _   '  \\
+            ; *\` _.   \`*-._
+            \`-.-'          \`-.
+              ;       \`       \`.
+              :.       .        \\
+              . \\  .   :   .-'   .
+              '  \`+.;  ;  '      :
+              :  '  |    ;       ;-.
+              ; '   : :\`-:     _.\`*
+           .*' /  .*' ; .*\`- +'  \`*'
+  .        \`*-*   \`*-*  \`*-*'\`)
+`
 
-// const five = require('johnny-five')
-
-
-
-// console.log(getConf)
+module.exports = makeCat

@@ -12,13 +12,15 @@
       "inverted": true
     },
     "jstk": {
-      "X": "A0",
-      "Y": "A1",
+      "x": "A0",
+      "y": "A1",
       "jBt": "9",
-      "isPullup": true
+      "isPullup": true,
+      "deadZone": 0.05
     }
   },
+  "inputRange": [0, 180],
+  "servoRange": [10, 170],
   "hwJstk": false,
-  "isHWTested": false,
   "isDefaultConfig" : true
 }
