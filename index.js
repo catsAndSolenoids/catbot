@@ -2,7 +2,6 @@ const five = require('johnny-five')
 
 const chalk = require('chalk')
 const green = chalk.green
-const red = chalk.red
 const blue = chalk.cyan
 
 const debug = require('debug')('catbot:board')
@@ -10,8 +9,6 @@ const utils = require('./lib/utils')
 const applyDeadzone = utils.applyDeadzone
 const rng = utils.convertRange
 const getConf = require('./lib/config')
-
-
 
 function makeCat (catCb, opts) {
   console.log(green(msg))
@@ -45,9 +42,10 @@ function makeCat (catCb, opts) {
     debug('board is ready')
     console.log(blue('catbot is ready to use'))
     const laser = new five.Led(hw.laser.pin)
-    const servoX = new five.Servo({pin: hw.servoX.pin, startAt: 10, range: opts.servoRange})
-    const servoY = new five.Servo({pin: hw.servoY.pin, startAt: 10, range: opts.servoRange})
+    const servoX = new five.Servo({pin: hw.servoX.pin, startAt: 90, range: opts.servoRange})
+    const servoY = new five.Servo({pin: hw.servoY.pin, startAt: 90, range: opts.servoRange})
 
+    // if analog joystick is enabled
     if (opts.hwJoystick) {
       let joyTimer
       let isJoyOn = false
@@ -89,9 +87,12 @@ function makeCat (catCb, opts) {
           console.log(blue('joyMode:'), isJoyOn)
         }, 2000)
       })
-        
+
+      // export a ref to the hardware to the cat object
       cat.hw.hwJoy = hwJoy
+      cat.hwJoy = hwJoy
     }
+
 
     /**
      * orient the turret to the passed positions
@@ -106,15 +107,24 @@ function makeCat (catCb, opts) {
       servos[1].to(rng(pos[1], opts.inputRange, opts.servoRange))
     }
 
+    // enable inject hardware to REPL if REPL is enabled
+    if (opts.boardOpt.repl === true) {
+      console.log(green('REPL mode enabled'))
+      cat.board.repl.inject({
+        servoX: servoX,
+        servoY: servoY,
+        laser: laser,
+        to: cat.to
+      })
+    }
+
+    // export a ref to the hardware to the cat object
     cat.laser = laser
     cat.servoX = servoX
     cat.servoY = servoY
     return catCb(null, cat)
-    // debug(cat)
   })
-  // hw.laser = new five.Led(12)
 }
-
 
 const msg = `
             \`*-.
