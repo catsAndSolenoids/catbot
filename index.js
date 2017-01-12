@@ -12,8 +12,18 @@ const getConf = require('./lib/config')
 
 function makeCat (catCb, opts) {
   console.log(green(msg))
+  if (!catCb) {
+    catCb = function () {
+      debug('no cb provided')
+    }
+  }
+  if (!opts) opts = {}
   if (!opts.boardOpt) opts.boardOpt = {repl: false}
-  if (!opts.catConf) opts.catConf = getConf()
+  if (!opts.catConf) {
+    opts.catConf = getConf()
+  } else {
+    opts.catConf = getConf(opts.catConf)
+  }
   if (!opts.inputRange) {
     debug('inputRange missing')
     if (opts.catConf.inputRange) {
@@ -46,7 +56,7 @@ function makeCat (catCb, opts) {
     const servoY = new five.Servo({pin: hw.servoY.pin, startAt: 90, range: opts.servoRange})
 
     // if analog joystick is enabled
-    if (opts.hwJoystick) {
+    if (opts.hwJoystick || opts.catConf.hwJstk) {
       let joyTimer
       let isJoyOn = false
       debug('init hwJoystick')
@@ -89,10 +99,8 @@ function makeCat (catCb, opts) {
       })
 
       // export a ref to the hardware to the cat object
-      cat.hw.hwJoy = hwJoy
       cat.hwJoy = hwJoy
     }
-
 
     /**
      * orient the turret to the passed positions
@@ -111,8 +119,8 @@ function makeCat (catCb, opts) {
     if (opts.boardOpt.repl === true) {
       console.log(green('REPL mode enabled'))
       cat.board.repl.inject({
-        servoX: servoX,
-        servoY: servoY,
+        x: servoX,
+        y: servoY,
         laser: laser,
         to: cat.to
       })
@@ -120,8 +128,8 @@ function makeCat (catCb, opts) {
 
     // export a ref to the hardware to the cat object
     cat.laser = laser
-    cat.servoX = servoX
-    cat.servoY = servoY
+    cat.x = servoX
+    cat.y = servoY
     return catCb(null, cat)
   })
 }
