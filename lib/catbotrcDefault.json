@@ -1,0 +1,24 @@
+{
+  "hw": {
+    "laser": {
+      "pin": 12
+    },
+    "servoX": {
+      "pin": 10,
+      "inverted": true
+    },
+    "servoY": {
+      "pin": 11,
+      "inverted": true
+    },
+    "jstk": {
+      "X": "A0",
+      "Y": "A1",
+      "jBt": "9",
+      "isPullup": true
+    }
+  },
+  "hwJstk": false,
+  "isHWTested": false,
+  "isDefaultConfig" : true
+}

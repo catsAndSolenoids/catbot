@@ -18,7 +18,15 @@
   "author": "Jérôme Loï",
   "license": "BSD",
   "dependencies": {
-    "johnny-five": "^0.8.85",
-    "node-getopt": "^0.2.3"
+    "debug": "^2.6.0",
+    "johnny-five": "^0.10.6",
+    "node-getopt": "^0.2.3",
+    "rc": "^1.1.6"
+  },
+  "devDependencies": {
+    "eslint": "^3.13.1",
+    "eslint-config-standard": "^6.2.1",
+    "eslint-plugin-promise": "^3.4.0",
+    "eslint-plugin-standard": "^2.0.1"
   }
 }
