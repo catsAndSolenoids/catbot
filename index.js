@@ -75,10 +75,10 @@ function makeCat (catCb, opts) {
         if (isJoyOn === true) {
           const X = applyDeadzone(this.x, hw.jstk.deadZone)
           const Y = applyDeadzone(this.y, hw.jstk.deadZone)
-
+          debug(X, Y)
           if (X !== 0 || Y !== 0) {
-            servoX.to(rng(this.x, opts.inputRange, opts.servoRange))
-            servoY.to(rng(this.y, opts.inputRange, opts.servoRange))
+            servoX.to(rng(this.x, [1, -1], opts.servoRange))
+            servoY.to(rng(this.y, [1, -1], opts.servoRange))
           } else {
             servoX.to(rng(0, [1, -1], [10, 170]))
             servoY.to(rng(0, [1, -1], [10, 170]))

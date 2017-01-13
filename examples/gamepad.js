@@ -3,7 +3,7 @@ const catbot = require('../index')
 
 const opts = {
   catConf: {
-    inputRange: [-1, 1] // gamepads have a -1, 1 range, so we override default conf
+    inputRange: [1, -1] // gamepads have a -1, 1 range, so we override default conf
   }
 }
 
