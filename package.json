@@ -1,6 +1,6 @@
 {
   "name": "catbot",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "arduino remote cat controller",
   "main": "index.js",
   "scripts": {
