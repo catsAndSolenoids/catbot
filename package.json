@@ -1,6 +1,6 @@
 {
   "name": "catbot",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "arduino remote cat controller",
   "main": "index.js",
   "scripts": {
@@ -23,6 +23,7 @@
     "johnny-five": "^0.10.6",
     "lodash": "^4.17.4",
     "node-getopt": "^0.2.3",
+    "fs-extra": "^1.0.0",
     "rc": "^1.1.6"
   },
   "devDependencies": {
