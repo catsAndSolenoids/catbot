@@ -67,7 +67,7 @@ the led with in the schematic is the laser, my Fritzing did not have a laser mod
 
 the second argument of the catbot function is an option oject, here are the default and explanation of the settings, this object if optional, and you just need to add the value you want to override
 
-```
+```javascript
 {
 	hwJoystick: false // this enable/disable creation and pooling of the the harware analogue joystick
 	catConfig: {
