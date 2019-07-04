@@ -2,7 +2,7 @@ const catbot = require('../index')
 
 const opts = {
   hwJoystick: true,
-  boardOpt: {repl: true},
+  boardOpt: {repl: false},
   catConf: {hw: {laser: {pin: 12}}}
 }
 
